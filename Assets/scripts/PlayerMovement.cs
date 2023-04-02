@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
     private BoxCollider2D coll;
     private Animator anim;
     private SpriteRenderer sprite;
+    //private PolygonCollider2D colltwo;
 
     [SerializeField] private LayerMask jumpableGround;
 
@@ -20,6 +21,9 @@ public class PlayerMovement : MonoBehaviour
     private enum MovementState { idle, running, jumping, falling }
 
 
+    [SerializeField] private AudioSource jumpSound;
+    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,7 +32,7 @@ public class PlayerMovement : MonoBehaviour
         coll = GetComponent<BoxCollider2D>();
         anim = GetComponent<Animator>();
         sprite = GetComponent<SpriteRenderer>();
-        
+        //colltwo = GetComponent<PolygonCollider2D>();
 
     }
 
@@ -40,6 +44,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetButtonDown("Jump") && IsGrounded()) // check for space pressed down AND if we're on ground
         {
+            jumpSound.Play();
             jumpKeyPressed = true;  // then its true
         }
 
@@ -95,6 +100,7 @@ public class PlayerMovement : MonoBehaviour
     private bool IsGrounded()
     {
         //  create box at same pos of player box collider, check if intersects with ground layer
+        // return Physics2D.BoxCast(coll.bounds.center, coll.bounds.size, 0f, Vector2.down, .05f, jumpableGround);
         return Physics2D.BoxCast(coll.bounds.center, coll.bounds.size, 0f, Vector2.down, .05f, jumpableGround);
     }
 }
