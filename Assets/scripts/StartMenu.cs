@@ -10,6 +10,13 @@ public class StartMenu : MonoBehaviour
 {
     //[SerializeField] private AudioSource buttonSound;
 
+
+    public void Awake()
+    {
+        GameObject.FindGameObjectWithTag("Music").GetComponent<MusicClass>().playMusic();
+    }
+
+
     // public method so button can access
     public void StartGame()
     {     
@@ -24,6 +31,9 @@ public class StartMenu : MonoBehaviour
         // wait 1 second after click before loading next scene
         yield return new WaitForSecondsRealtime(1);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+
+        // call function from MusicClass to initiate bg music
+        GameObject.FindGameObjectWithTag("Music").GetComponent<MusicClass>().playMusic();
     }
     
     
